@@ -1,4 +1,11 @@
-    
+// removeActiveClass
+ function removeActiveClass(){
+    const activeClass = document.getElementsByClassName('active');
+   for(let btn of activeClass){
+    btn.classList.remove('active');  
+     
+   }
+}
    // showCategories function
     function getCategories(){
     fetch('https://openapi.programming-hero.com/api/phero-tube/categories').then((res)=> res.json()).then((data)=> showCategories(data.categories))
@@ -6,7 +13,11 @@
 
     // getVideos function
     const getVideos =()=>{
-        fetch('https://openapi.programming-hero.com/api/phero-tube/videos').then((Response) => Response.json()).then((data)=> showVideos(data.videos))
+        fetch('https://openapi.programming-hero.com/api/phero-tube/videos').then((Response) => Response.json()).then((data)=> {
+          removeActiveClass();
+          document.getElementById('btn-all').classList.add('active');
+            showVideos(data.videos)
+        })
     }
 
     // showv video by Categories > function
@@ -15,7 +26,13 @@
         https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
        fetch(url)
        .then((res)=>res.json())
-       .then((data)=> showVideos(data.category))
+       .then((data)=> {
+        removeActiveClass();
+        const clickedBtn = document.getElementById(`btn-${id}`)
+        clickedBtn.classList.add('active')
+        
+        showVideos(data.category);
+       })
     }
 
     // showCategories function
@@ -26,7 +43,7 @@
     const categoryDiv = document.createElement('div');
     categoryDiv.innerHTML = `
 
-    <button onclick="loadVideoByCategory(${cat.category_id})" class="btn btn-sm hover:bg-red-500 hover:text-white">${cat.category}</button>
+    <button id="btn-${cat.category_id}" onclick="loadVideoByCategory(${cat.category_id})" class="btn btn-sm hover:bg-red-500 hover:text-white">${cat.category}</button>
 
     `
     categoryContainer.append(categoryDiv);
@@ -39,6 +56,14 @@
     const showVideos =(videos)=>{
         const videosContainer = document.getElementById('videosContainer');
         videosContainer.innerHTML = '';
+        if (videos.length == 0) {
+            videosContainer.innerHTML = `
+             <div class="col-span-full mt-20">
+        <img class="w-40 mx-auto" src="./assets/Icon.png" alt="">
+        <h2 class="text-2xl font-bold text-center py-5"> Oppps Soory!! There is no content here.</h2>
+       </div>
+            `;
+        }
         videos.forEach(video => {
        
         const cardDiv =document.createElement('div');
@@ -79,4 +104,4 @@
     // call functions
   
     getCategories()
-
+    getVideos()

@@ -9,7 +9,12 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-
+<style>
+    .active{
+        background:red;
+        color: white;
+    }
+</style>
 </head>
 <body>
         <!-- header section  -->
@@ -30,14 +35,14 @@
 
   <nav id="categoryContainer" class="flex justify-center items-center py-5 gap-5 ">
    <div>
-    <button onclick="getVideos()" class="btn btn-sm bg-red-500 text-white px-4">ALL</button>
+    <button id="btn-all" onclick="getVideos()" class="btn btn-sm   px-4">ALL</button>
    </div>
 </nav>
 
     <!-- videos sectino  -->
     <section id="videosContainer" class=" w-11/12 mx-auto  grid md:grid-cols-4 grid-cols-2 gap-5 ">
 
-       
+     
     </section>
 
 
